@@ -1,0 +1,45 @@
+services:
+  db:
+    image: mariadb
+    environment:
+      MARIADB_ROOT_PASSWORD: ${DB_PASS}
+      MARIADB_DATABASE: ${DB_NAME}
+    ports:
+      - "3306:3306"
+    healthcheck:
+      test: [ 'CMD', 'mysqladmin', 'ping', '-u', 'root', '-p $DB_PASS' ]
+      interval: 10s
+      timeout: 0s
+      retries: 5
+
+  auth-dev:
+    links:
+      - ""
+    depends_on:
+      db:
+        condition: service_healthy
+    build:
+      context: ./graphql-auth
+      dockerfile: DockerfileDev
+    volumes:
+      - ./graphql-auth:/app
+      - /app/node_modules
+      - /app/.pnpm-store
+    environment:
+      - DATABASE_URL=mysql://root:${DB_PASS}@db:3306/${DB_NAME}
+      - JWT_SECRET=${JWT_SECRET}
+      - PORT=${PORT}
+    ports:
+      - "3000:${PORT}"
+
+  auth-prod:
+    depends_on:
+      db:
+        condition: service_healthy
+    image: mohammaddocker/graph-auth:0.1
+    environment:
+      - DATABASE_URL=mysql://root:${DB_PASS}@db:3306/${DB_NAME}
+      - JWT_SECRET=${JWT_SECRET}
+      - PORT=${PORT}
+    ports:
+      - "3002:${PORT}"

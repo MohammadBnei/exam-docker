@@ -117,7 +117,7 @@ const Query = objectType({
       },
       resolve: (_parent, args, context: Context) => {
         return context.prisma.comment.findUnique({
-          where: { authorId: args.id || undefined },
+          where: { authorId: args.id || undefined, id: undefined },
         })
       },
     })
@@ -129,7 +129,7 @@ const Query = objectType({
       },
       resolve: (_parent, args, context: Context) => {
         return context.prisma.comment.findUnique({
-          where: { postId: args.id || undefined },
+          where: { postId: args.id || undefined, id: undefined },
         })
       },
     })

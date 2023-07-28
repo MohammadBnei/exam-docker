@@ -76,6 +76,13 @@ Poussez la nouvelle image sur DockerHub.
  - linux/arm64
  - linux/amd64
 
+---
+Correction 
+```sh
+docker buildx create --platform linux/arm64,linux/amd64 --builder multi-builder
+docker buildx build --platform=linux/amd64,linux/arm -t <dockerhub_username>/<image_name>:latest --push  .
+```
+---
 **Exercice 7 (3pt)**
 
 Vous trouverez dans le dossier `geek-life` une application pour le terminal écrit en Golang. 
