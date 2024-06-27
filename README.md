@@ -46,8 +46,11 @@ Ce Dockerfile aura pour base une image avec node en version 20, et la commande p
 
 *intermédiaire*
 **1pt** Utilisez des volumes anonymes pour ne pas copier les nodes_modules et le .pnpm-store du conteneur au filesystem de l'hôte
+
+
 *intermédiaire*
 **1pt** Utilisez les variables d'environnement précédemment créées afin de composer l'URL de connexion à la BDD, le JWT secret et le port.
+
 *intermédiaire*
 **1pt** Attendez que la bdd soit fonctionnelle (à l'aide du healthcheck) avant de lancer le conteneur de dev
 
